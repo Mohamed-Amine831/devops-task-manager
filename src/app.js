@@ -10,7 +10,10 @@ let tasks = [
 ];
 
 app.get('/', (req, res) => {
-  res.json({ message: "DevOps Task Manager API is running (Lab 1)" });
+  <<<<<<< HEAD 
+  res.json({ message: "Welcome from MAIN branch" });
+======= 
+  >>>>>>> feature/routes-refactor 
 });
 
 app.get('/tasks', (req, res) => {
@@ -24,3 +27,6 @@ app.post('/tasks', (req, res) => {
 });
 
 app.listen(3000, ()=> console.log("API running on port 3000"));
+
+const tasksRouter = require('./routes/tasks'); 
+app.use('/tasks', tasksRouter);

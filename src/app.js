@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+const tasksRouter = require('./routes/tasks'); 
+
 let tasks = [
   { id: 1, title: "Initial task", completed: true },
   { id: 2, title: "Install Git and Node.js", "completed": true },
@@ -10,8 +12,10 @@ let tasks = [
 ];
 
 app.get('/', (req, res) => {
-  res.json({ message: "DevOps Task Manager API is running (Lab 1)" });
+  res.json({ message: "DevOps Task Manager API is running..." });
 });
+
+app.use('/tasks', tasksRouter);
 
 app.get('/tasks', (req, res) => {
   res.json(tasks);

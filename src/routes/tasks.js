@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const router = express.Router();
 
@@ -8,12 +7,10 @@ let tasks = [
   { id: 3, title: "Learn DevOps basics", completed: false }
 ];
 
-// GET all tasks
 router.get('/', (req, res) => {
   res.json(tasks);
 });
 
-// POST a new task
 router.post('/', (req, res) => {
   const newTask = {
     id: tasks.length + 1,
@@ -25,17 +22,3 @@ router.post('/', (req, res) => {
 });
 
 module.exports = router;
-=======
-const express = require('express'); 
-const router = express.Router(); 
-const tasks = [ 
-    { id: 1, title: "Learn Git", completed: false }, 
-    { id: 2, title: "Practice DevOps", completed: true } 
-]; 
-
-router.get('/', (req, res) => { 
-    res.json(tasks); 
-}); 
-
-module.exports = router; 
->>>>>>> main

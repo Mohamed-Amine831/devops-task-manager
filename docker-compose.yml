@@ -1,0 +1,41 @@
+services:
+
+  # ─── API SERVICE ────────────────────────────────────────────────────
+  api:
+    image: ghcr.io/mohamed-amine831/task-manager-api:prod
+    # ↑ The image built and pushed to GHCR in Lab 4. Replace with your actual image path.
+
+    ports:
+      - "3000:3000"
+    # ↑ FORMAT: "HOST_PORT:CONTAINER_PORT"
+    #   This maps your laptop's port 3000 to the container's port 3000.
+    #   After this, `curl http://localhost:3000` reaches your API.
+
+    depends_on:
+      - db
+    # ↑ Tells Compose: don't start `api` until `db` is running.
+    #   Without this, the API might crash on startup because MongoDB isn't ready.
+
+    environment:
+      - MONGO_URL=mongodb://db:27017/tasksdb
+    # ↑ Passes a connection string into the API container as an env variable.
+    #   KEY POINT: "db" is NOT an IP address — it's the service name below.
+    #   Docker's internal network resolves "db" to the db container's IP automatically.
+
+  # ─── DATABASE SERVICE ───────────────────────────────────────────────
+  db:
+    image: mongo:6
+    # ↑ Official MongoDB 6 image from Docker Hub. No Dockerfile needed.
+    #   Docker pulls it automatically on first `compose up`.
+
+    volumes:
+      - mongo_data:/data/db
+    # ↑ Mounts a named volume at the path where MongoDB stores its files.
+    #   This means data SURVIVES even if you run `docker compose down`.
+    #   Without this, every restart wipes your database.
+
+# ─── VOLUME DEFINITION ────────────────────────────────────────────────
+volumes:
+  mongo_data:
+  # ↑ Declares the named volume. Docker manages its location on disk.
+  #   You never need to know where it lives — Docker handles it.
